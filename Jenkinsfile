@@ -35,6 +35,23 @@ pipeline {
       }
     }
 
+    stage('Debug Credentials') {
+      steps {
+        script {
+          def creds = com.cloudbees.plugins.credentials.CredentialsProvider.lookupCredentials(
+            com.cloudbees.plugins.credentials.common.StandardCredentials.class,
+            Jenkins.instance,
+            null,
+            null
+          )
+          for (c in creds) {
+            echo "Found credential: ${c.id} (${c.description})"
+          }
+        }
+      }
+    }
+
+
     stage('Run Hello World Container') {
       steps {
         sshagent(['docker-ssh']) {
