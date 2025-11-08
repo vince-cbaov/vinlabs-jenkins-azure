@@ -21,19 +21,25 @@ pipeline {
 
     stage('Check Remote Docker') {
       steps {
-        sh "ssh -o StrictHostKeyChecking=no ${DOCKER_HOST} 'docker version'"
+        sshagent(['docker-ssh']) {
+          sh "ssh -o StrictHostKeyChecking=no ${DOCKER_HOST} 'docker version'"
+        }
       }
     }
 
     stage('List Docker Containers') {
       steps {
-        sh "ssh ${DOCKER_HOST} 'docker ps -a'"
+        sshagent(['docker-ssh']) {
+          sh "ssh ${DOCKER_HOST} 'docker ps -a'"
+        }
       }
     }
 
     stage('Run Hello World Container') {
       steps {
-        sh "ssh ${DOCKER_HOST} 'docker run --rm hello-world'"
+        sshagent(['docker-ssh']) {
+          sh "ssh ${DOCKER_HOST} 'docker run --rm hello-world'"
+        }
       }
     }
 
