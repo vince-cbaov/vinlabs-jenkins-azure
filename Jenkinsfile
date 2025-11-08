@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    DOCKER_HOST = 'vinadmin@20.238.54.201'
+    DOCKER_HOST = 'vinadmin@20.238.36.65'
     NGINX_IP = '10.0.1.4'
   }
 
