@@ -43,6 +43,21 @@ pipeline {
       }
     }
 
+    stage('Deploy to Azure Web App') {
+      steps {
+        withCredentials([azureServicePrincipal('jenkins-sp')]) {
+          sh '''
+            az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
+            az webapp config container set \
+              --name vinlabs-python-app \
+              --resource-group vinlabs-rg \
+              --docker-custom-image-name vfalconer/vinlabs-python:latest
+          '''
+        }
+      }
+    }
+
+
     stage('Check Jenkins') {
       steps {
         sh 'curl http://localhost:8080'
