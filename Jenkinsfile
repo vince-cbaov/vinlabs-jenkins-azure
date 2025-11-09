@@ -50,7 +50,7 @@ pipeline {
             az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_CLIENT_SECRET --tenant $AZURE_TENANT_ID
             az webapp config container set \
               --name vinlabs-python-app \
-              --resource-group vinlabs-rg \
+              --resource-group vinlabs \
               --docker-custom-image-name vfalconer/vinlabs-python:latest
           '''
         }
